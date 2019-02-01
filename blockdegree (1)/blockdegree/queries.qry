@@ -1,0 +1,14 @@
+query selectHistorianRecordsByTrxId {
+  description: "Select historian records by transaction id"
+  statement:
+    SELECT org.hyperledger.composer.system.HistorianRecord
+    WHERE (transactionId == _$transactionId)
+}
+
+query verifyTransaction {
+  description:"Verify whether Cert ID is present"
+  statement:
+  SELECT org.degree.PersonalCertificate
+  WHERE (certId == _$certId)
+
+}
