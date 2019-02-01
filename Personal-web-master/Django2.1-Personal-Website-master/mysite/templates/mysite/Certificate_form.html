@@ -1,0 +1,41 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 mx-auto" style="margin-top: 70px">
+                <form action="{% url 'Certificate_form' %}" method="post">
+                    {% csrf_token %}
+                     <div class="form-group row">
+                        <label for="example-email-input" class="col-3 col-form-label">Name</label>
+                        <div class="col-9">
+                            <input name='name' class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-3 col-form-label">Email</label>
+                        <div class="col-9">
+                            <input name='email' class="form-control" type="email" id="example-email-input">
+                        </div>
+                    </div>
+                   
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-3 col-form-label">Course details</label>
+                        <div class="col-9">
+                            <input name='course_details' class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    </div>
+                </form>
+            </div>
+             <div class="col-sm-5 mx-auto" style="margin-top: 70px;border:1px solid black;height:500px"> 
+                <embed src="{{test}}" width="800px" height="2100px" /> 
+              <!-- <iframe src="https://docs.google.com/gview?url=https://path.com/to/your/pdf.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe> --> -->
+             </div> 
+        </div>
+
+    </div>
+
+{% endblock %}

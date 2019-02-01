@@ -1,0 +1,29 @@
+Please find below github and tutorial links that were used to create the blockchain
+
+ 
+
+Hyperledger composer playground url:
+
+https://composer-playground.mybluemix.net
+
+ 
+
+Tutorial to deploy business network and start the REST Server:
+
+https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial.html
+
+ 
+
+GitHub:
+
+Certificate Models:
+
+https://github.com/ccastroiragorri/blockdegree_previous/tree/master/degree-bnav2/models
+
+ 
+
+Setup of Hyperledger fabric and deploying business networks and Python frontend(Pizza on the Blockchain):
+
+https://github.com/AlexAlBasosi/pizza-on-the-blockchain
+
+Please note: some steps are outdated, refer the tutorial above in parallel for deploying business network as it has the latest steps
