@@ -1,0 +1,84 @@
+Prerequisites:
+curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
+chmod u+x prereqs-ubuntu.sh
+./prereqs-ubuntu.sh
+
+Step 1: Install the CLI Tools:
+
+Essential CLI tools:
+npm install -g composer-cli
+
+Utility for running a REST Server on your machine to expose your business networks as RESTful APIs:
+npm install -g composer-rest-server
+
+Useful utility for generating application assets:
+npm install -g generator-hyperledger-composer
+
+Yeoman is a tool for generating applications, which utilises generator-hyperledger-composer:
+npm install -g yo
+
+
+step 2: Install Playground:
+npm install -g composer-playground
+
+Step 3: Install Hyperledger Fabric
+mkdir ~/fabric-tools && cd ~/fabric-tools
+curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
+unzip fabric-dev-servers.zip
+./downloadFabric.sh
+
+Step 4: Start Hyperledger Fabric
+Start the fabric:
+
+./startFabric.sh
+
+Generate a PeerAdmin card:
+
+./createPeerAdminCard.sh
+
+
+######You can start and stop your runtime using ~/fabric-tools/stopFabric.sh, and start it again with ~/fabric-tools/startFabric.sh.
+
+Step 5: Creating the .bna file and deploying:
+yo hyperledger-composer:businessnetwork
+
+A. To install the composer runtime, run the following command:
+composer runtime install --card PeerAdmin@hlfv1 --businessNetworkName pizza-on-the-blockchain
+
+The composer runtime install command requires a PeerAdmin business network card (in this case one has been created and imported in advance), and the name of the business network.
+
+B. To deploy the business network, from the pizza-on-the-blockchain directory, run the following command:
+composer network start --card PeerAdmin@hlfv1 --networkAdmin admin --networkAdminEnrollSecret adminpw --archiveFile pizza-on-the-blockchain@0.0.1.bna --file networkadmin.card
+
+The composer network start command requires a business network card, as well as the name of the admin identity for the business network, the file path of the .bna and the name of the file to be created ready to import as a business network card.
+
+C: To import the network administrator identity as a usable business network card, run the following command:
+composer card import --file networkadmin.card
+
+The composer card import command requires the filename specified in composer network start to create a card.
+
+D: To check that the business network has been deployed successfully, run the following command to ping the network:
+composer network ping --card admin@pizza-on-the-blockchain
+
+The composer network ping command requires a business network card to identify the network to ping.
+
+
+Step 6: Generating a REST Server
+Hyperledger Composer can generate a bespoke REST API based on a business network. For developing a web application, the REST API provides a useful layer of language-neutral abstraction.
+-->To create the REST API, navigate to the pizza-on-the-blockchain directory and run the following command:
+composer-rest-server
+
+-->Enter admin@pizza-on-the-blockchain as the card name.
+
+-->Select never use namespaces when asked whether to use namespaces in the generated API.
+
+-->Select No when asked whether to secure the generated API.
+
+-->Select Yes when asked whether to enable event publication.
+
+-->Select No when asked whether to enable TLS security.
+
+
+***The generated API is connected to the deployed blockchain and business network.
+
+***Once the REST server is up and running, head over to https://localhost:3000/explorer
