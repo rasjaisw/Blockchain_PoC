@@ -1,0 +1,25 @@
+JSON:
+ 
+[ { "$class": "org.degree.PersonalCertificate", 
+ "certId": "787db546bdd6af22c356df56548a56683b501736",
+ "localAdministrator": "resource:org.degree.Administrator#0571",
+ "templateId": "resource:org.degree.CertificateTemplate#0003",
+ "recipient": { "$class": "org.degree.Recipient",
+ "hashed": false,
+ "email": "nikhita.salian@gmail.com" },
+ "recipientProfile": { "$class": "org.degree.RecipientProfile",
+ "typen": "RecipientProfile,Extension",
+ "name": "Nikhita Salian",
+ "publicKey": "Aute in Lorem veniam." },
+ "issuer": { "$class": "org.degree.Issuer",
+ "id": "123",
+ "typen": "Profile",
+ "name": "Capgemini" },
+ "certifiedDate": "13th of February 2019",
+ "course": "AWS",
+ "hash": "787db546bdd6af22c356df56548a56683b501736" } ] 
+ 
+
+ 
+ Port forwarding command:
+ ssh -i "name of pem file" -L 3000:localhost:3000 name of instance
