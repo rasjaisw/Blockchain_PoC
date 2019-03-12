@@ -1,0 +1,122 @@
+https://github.com/hyperledger/education/blob/master/LFS171x/docs/introduction-to-hyperledger-composer.md#business-network---modeling-language
+
+namespace org.promo
+abstract participant Individual identified by id {
+    o String id
+    o String name
+    o Address address
+}
+concept Address {
+    o String addressLine
+    o String locality
+}
+participant Customer extends Individual {
+    o Integer mobile_no.
+}
+participant Regulator identified by RegulatorId {
+    o String RegulatorId
+    o String name
+}
+asset Promo identified by promoId {
+    o String promoId
+	o String description
+    o PromoStatus default="WITHAPPROVER"
+    o DateTime validity
+    --> Regulator regulator
+}
+enum PromoStatus {
+    o WITHAPPROVER
+    o APPROVED
+	o REJECTED
+}
+transaction SendToRegulator {
+    --> Promo promo
+    --> Regulator regulator
+}
+transaction SubscribePromo {
+    --> Promo promo
+    --> Customer customer
+}
+event SubscribePromo {
+    o String promoId
+    o String name
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+'use strict';
+/**
+ * Defining the namespace for the business network
+ */
+const NS = 'org.promo';
+/**
+* Transfer promo to the regulator
+* @param {org.promo.SendToRegulator} tx - The SendToRegulator transaction
+* @transaction
+*/
+async function SendToRegulator(tx) {
+
+    // Get asset registry for Promo
+    const promoRegistry = await getAssetRegistry(NS + '.Promo');
+
+    // Get participant registry for Individual
+    const regulatorRegistry = await getParticipantRegistry(NS + '.Regulator');
+	
+	//Retrieve the id of the Regulator from the Transaction.
+
+    // Get regulator ID
+    const regulatorId = tx.regulator.getIdentifier();
+    tx.promo.status = 'WITHAPPROVER';
+	await promoRegistry.update(tx.promo);
+	 }
+	
+async function SubscribePromo(tx) {
+
+    // Get asset registry for Promo
+    const promoRegistry = await getAssetRegistry(NS + '.Promo');
+
+    // Get participant registry for Customers
+    const customerRegistry = await getParticipantRegistry(NS + '.Customer');
+	
+	//Next, we have to verify that promo actually exists.
+
+    const promo = await promoRegistry.get(tx.promo.getIdentifier());
+    // Make sure that promo exists
+    if (!promo) {
+    		throw new Error(`promo with id ${tx.promo.getIdentifier()} does not exist`);
+		}
+		
+		And that the status of the Promo is REJECTED. This is to make sure that a Promo rejected cannot be subscribed.
+
+		// Make sure the promo status is APPROVED and not REJECTED
+		if (promo.status !== 'APPROVED'|'WITHAPPROVER') {
+				throw new Error(`Promo with id ${tx.promo.getIdentifier()} is not in APPROVED status`);
+		}
+	Retrieve the id of the Customer from the Transaction.
+
+    // Get customer ID
+    const customerId = tx.customer.getIdentifier();
+	
+	Next, we verify that the Customer exists
+
+    // Make sure that customer exists
+    const customer = await customerRegistry.get(customerId);
+    if (!customer) {
+        throw new Error(`Customer with id ${customerId} does not exist`);
+    }
+	
+	
+
+    // Update customer with promo
+	
+   
